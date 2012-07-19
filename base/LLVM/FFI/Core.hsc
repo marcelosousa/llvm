@@ -20,6 +20,7 @@ module LLVM.FFI.Core
     , disposeModule
     , ptrDisposeModule
 
+    , getModuleIdentifier
     , getDataLayout
     , setDataLayout
 
@@ -555,6 +556,7 @@ import Foreign.C.Types (CDouble, CInt, CUInt, CLLong, CULLong)
 import Foreign.Ptr (Ptr, FunPtr)
 
 #include <llvm-c/Core.h>
+#include <llvm-ecb/module.h>
 
 data Module
     deriving (Typeable)
@@ -568,6 +570,9 @@ foreign import ccall unsafe "LLVMDisposeModule" disposeModule
 
 foreign import ccall unsafe "&LLVMDisposeModule" ptrDisposeModule
     :: FunPtr (ModuleRef -> IO ())
+
+foreign import ccall unsafe "LLVMGetModuleIdentifier" getModuleIdentifier
+    :: ModuleRef -> IO CString
 
 foreign import ccall unsafe "LLVMGetDataLayout" getDataLayout
     :: ModuleRef -> IO CString

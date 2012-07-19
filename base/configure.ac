@@ -72,7 +72,7 @@ x86_64-apple-darwin)
     ;;
 esac
 
-llvm_version="`$llvm_config --version`"
+llvm_version="`$llvm_config --version | sed -e 's/svn//g'`"
 llvm_cppflags="`$llvm_config --cppflags`"
 llvm_includedir="`$llvm_config --includedir`"
 llvm_ldflags="`$llvm_config --ldflags`"

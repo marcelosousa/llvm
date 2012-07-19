@@ -30,7 +30,7 @@ module LLVM.Core(
     -- * Initialize
     initializeNativeTarget,
     -- * Modules
-    Module, newModule, newNamedModule, defineModule, destroyModule, createModule,
+    Module, newModule, withModule, newNamedModule, defineModule, destroyModule, createModule,
     ModuleProvider, createModuleProviderForExistingModule,
     PassManager, createPassManager, createFunctionPassManager,
     writeBitcodeToFile, readBitcodeFromFile,

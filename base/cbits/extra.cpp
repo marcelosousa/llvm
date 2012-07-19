@@ -387,7 +387,7 @@ LLVMModuleRef LLVMGetModuleFromAssembly(const char *asmtext, unsigned txtlen,
                                               llvm::getGlobalContext()))) {
         std::string s;
         llvm::raw_string_ostream buf(s);
-        error.Print("llvm-py", buf);
+        error.print("llvm-py", buf);
         *out = strdup(buf.str().c_str());
         return NULL;
     }
@@ -416,7 +416,7 @@ LLVMModuleRef LLVMGetModuleFromBitcode(const char *bitcode, unsigned bclen,
     delete mbp;
     return wrap(modulep);
 }
-
+/*
 unsigned LLVMLinkModules(LLVMModuleRef dest, LLVMModuleRef src, unsigned mode,
 			 char **out)
 {
@@ -441,7 +441,7 @@ unsigned LLVMLinkModules(LLVMModuleRef dest, LLVMModuleRef src, unsigned mode,
 
     return 1;
 }
-
+*/
 unsigned char *LLVMGetBitcodeFromModule(LLVMModuleRef module, unsigned *lenp)
 {
     assert(lenp);

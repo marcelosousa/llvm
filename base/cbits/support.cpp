@@ -88,3 +88,7 @@ void LLVMCreateStandardModulePasses(LLVMPassManagerRef PM,
                              HaveExceptions, InliningPass);
 #endif
 }
+
+const char *LLVMGetModuleIdentifier(LLVMModuleRef M){
+  return unwrap(M)->getModuleIdentifier().c_str();
+}
