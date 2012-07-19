@@ -137,7 +137,17 @@ module LLVM.FFI.Core
     , setSection
     , getAlignment
     , setAlignment
-      
+     
+    , hasUnnamedAddr
+    , getConstantTy
+
+    -- ** Constant Data Sequential
+    , constantValueGetElemType
+    , constantValueGetNumElem
+    , constantValueIsString
+    , constantValueGetAsString
+    , constantValueGetElemByteSize
+ 
     -- ** Global variables
     , addGlobal
     , getNamedGlobal
@@ -887,6 +897,28 @@ toLinkage c | c == (#const LLVMLinkerPrivateLinkage)        = LinkerPrivateLinka
 toLinkage c | c == (#const LLVMLinkerPrivateWeakLinkage)    = LinkerPrivateWeakLinkage
 toLinkage c | c == (#const LLVMLinkerPrivateWeakDefAutoLinkage) = LinkerPrivateWeakDefAutoLinkage
 toLinkage _ = error "toLinkage: bad value"
+
+
+foreign import ccall unsafe "LLVMGetConstantTy" getConstantTy
+    :: ValueRef -> IO CString
+
+foreign import ccall unsafe "LLVMConstantValueGetElemType" constantValueGetElemType
+    :: ValueRef -> IO TypeRef
+
+foreign import ccall unsafe "LLVMConstantValueGetNumElem" constantValueGetNumElem
+    :: ValueRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMConstantValueGetElemByteSize" constantValueGetElemByteSize
+    :: ValueRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMConstantValueGetAsString" constantValueGetAsString
+    :: ValueRef -> IO CString
+
+foreign import ccall unsafe "LLVMConstantValueIsString" constantValueIsString
+    :: ValueRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMHasUnnamedAddr" hasUnnamedAddr
+    :: ValueRef -> IO CUInt
 
 foreign import ccall unsafe "LLVMGetLinkage" getLinkage
     :: ValueRef -> IO CUInt
