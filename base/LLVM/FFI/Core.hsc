@@ -63,6 +63,7 @@ module LLVM.FFI.Core
     , functionType
     , isFunctionVarArg
     , getReturnType
+    , getFunctionReturnType
     , countParamTypes
     , getParamTypes
 
@@ -276,6 +277,12 @@ module LLVM.FFI.Core
 
     -- * Instruction field accessors
     , instGetOpcode, cmpInstGetPredicate
+    , returnInstGetReturnValue    -- added
+    , returnInstGetNumSuccessors  -- added
+    , returnInstHasReturnValue    -- added
+    , brInstIsConditional         -- added
+    , allocaGetAlignment          -- added
+    , allocaGetAllocatedType      -- added
 
     -- * Instruction building
     , Builder
@@ -556,7 +563,6 @@ import Foreign.C.Types (CDouble, CInt, CUInt, CLLong, CULLong)
 import Foreign.Ptr (Ptr, FunPtr)
 
 #include <llvm-c/Core.h>
-#include <llvm-ecb/module.h>
 
 data Module
     deriving (Typeable)
@@ -639,6 +645,10 @@ foreign import ccall unsafe "LLVMIsFunctionVarArg" isFunctionVarArg
 -- | Give a function's return type.
 foreign import ccall unsafe "LLVMGetReturnType" getReturnType
         :: TypeRef -> IO TypeRef
+
+-- | Give the functions return type.
+foreign import ccall unsafe "LLVMGetFunctionReturnType" getFunctionReturnType
+        :: ValueRef -> IO TypeRef
 
 -- | Give the number of fixed parameters that a function takes.
 foreign import ccall unsafe "LLVMCountParamTypes" countParamTypes
@@ -821,7 +831,7 @@ foreign import ccall unsafe "LLVMIsDeclaration" isDeclaration
 -- |An enumeration for the kinds of linkage for global values.
 data Linkage
     = ExternalLinkage     -- ^Externally visible function
-    | AvailableExternallyLinkage 
+    | AvailableExternallyLinkage
     | LinkOnceAnyLinkage  -- ^Keep one copy of function when linking (inline)
     | LinkOnceODRLinkage  -- ^Same, but only replaced by something equivalent.
     | WeakAnyLinkage      -- ^Keep one copy of named function when linking (weak)
@@ -832,9 +842,11 @@ data Linkage
     | DLLImportLinkage    -- ^Function to be imported from DLL
     | DLLExportLinkage    -- ^Function to be accessible from DLL
     | ExternalWeakLinkage -- ^ExternalWeak linkage description
-    | GhostLinkage        -- ^Stand-in functions for streaming fns from BC files    
+    | GhostLinkage        -- ^Stand-in functions for streaming fns from BC files
     | CommonLinkage       -- ^Tentative definitions
     | LinkerPrivateLinkage -- ^Like Private, but linker removes.
+    | LinkerPrivateWeakLinkage -- ^Similar to PrivateLinkage, but the symbol is weak.
+    | LinkerPrivateWeakDefAutoLinkage -- ^Similar to LinkerPrivateWeakLinkage, but its known that the address of the object is not taken.
     deriving (Show, Eq, Ord, Enum, Typeable)
 
 fromLinkage :: Linkage -> CUInt
@@ -853,6 +865,8 @@ fromLinkage ExternalWeakLinkage         = (#const LLVMExternalWeakLinkage)
 fromLinkage GhostLinkage                = (#const LLVMGhostLinkage)
 fromLinkage CommonLinkage               = (#const LLVMCommonLinkage)
 fromLinkage LinkerPrivateLinkage        = (#const LLVMLinkerPrivateLinkage)
+fromLinkage LinkerPrivateWeakLinkage    = (#const LLVMLinkerPrivateWeakLinkage)
+fromLinkage LinkerPrivateWeakDefAutoLinkage = (#const LLVMLinkerPrivateWeakDefAutoLinkage)
 
 toLinkage :: CUInt -> Linkage
 toLinkage c | c == (#const LLVMExternalLinkage)             = ExternalLinkage
@@ -870,6 +884,8 @@ toLinkage c | c == (#const LLVMExternalWeakLinkage)         = ExternalWeakLinkag
 toLinkage c | c == (#const LLVMGhostLinkage)                = GhostLinkage
 toLinkage c | c == (#const LLVMCommonLinkage)               = CommonLinkage
 toLinkage c | c == (#const LLVMLinkerPrivateLinkage)        = LinkerPrivateLinkage
+toLinkage c | c == (#const LLVMLinkerPrivateWeakLinkage)    = LinkerPrivateWeakLinkage
+toLinkage c | c == (#const LLVMLinkerPrivateWeakDefAutoLinkage) = LinkerPrivateWeakDefAutoLinkage
 toLinkage _ = error "toLinkage: bad value"
 
 foreign import ccall unsafe "LLVMGetLinkage" getLinkage
@@ -1079,6 +1095,24 @@ foreign import ccall unsafe "LLVMDeleteBasicBlock" deleteBasicBlock
 
 foreign import ccall unsafe "LLVMInstGetOpcode" instGetOpcode
     :: ValueRef -> IO Int
+
+foreign import ccall unsafe "LLVMReturnInstGetNumSuccessors" returnInstGetNumSuccessors
+    :: ValueRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMReturnInstGetReturnValue" returnInstGetReturnValue
+    :: ValueRef -> IO ValueRef
+
+foreign import ccall unsafe "LLVMReturnInstHasReturnValue" returnInstHasReturnValue
+    :: ValueRef -> IO CInt
+
+foreign import ccall unsafe "LLVMBrInstIsConditional" brInstIsConditional
+    :: ValueRef ->  IO CInt
+
+foreign import ccall unsafe "LLVMAllocaGetAlignment" allocaGetAlignment
+    :: ValueRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMAllocaGetAllocatedType" allocaGetAllocatedType
+    :: ValueRef -> IO TypeRef
 
 foreign import ccall unsafe "LLVMCmpInstGetPredicate" cmpInstGetPredicate
     :: ValueRef -> IO Int

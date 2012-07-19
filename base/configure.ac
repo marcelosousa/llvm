@@ -117,13 +117,13 @@ AC_CHECK_HEADERS([llvm/Support/DynamicLibrary.h], [], [],
 save_LIBS="$LIBS"
 LIBS="-lLLVMSupport -lpthread -ldl $LIBS"
 
-AC_CHECK_LIB(LLVMCore, LLVMModuleCreateWithName, [], [])
-if test "$ac_cv_lib_LLVMCore_LLVMModuleCreateWithName" = "no"; then
-  unset ac_cv_lib_LLVMCore_LLVMModuleCreateWithName
-  LIBS="-lLLVMSupport $save_LIBS"
-  AC_CHECK_LIB(LLVMCore, LLVMModuleCreateWithName, [],
-    [AC_MSG_ERROR(could not find LLVM C bindings)])
-fi
+#AC_CHECK_LIB(LLVMCore, LLVMModuleCreateWithName, [], [])
+#if test "$ac_cv_lib_LLVMCore_LLVMModuleCreateWithName" = "no"; then
+#  unset ac_cv_lib_LLVMCore_LLVMModuleCreateWithName
+#  LIBS="-lLLVMSupport $save_LIBS"
+#  AC_CHECK_LIB(LLVMCore, LLVMModuleCreateWithName, [],
+#    [AC_MSG_ERROR(could not find LLVM C bindings)])
+#fi
 
 llvm_num_version="`echo $llvm_version | tr . 0`"
 AC_DEFINE_UNQUOTED([HS_LLVM_VERSION], [$llvm_num_version],

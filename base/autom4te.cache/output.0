@@ -3170,102 +3170,13 @@ done
 save_LIBS="$LIBS"
 LIBS="-lLLVMSupport -lpthread -ldl $LIBS"
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for LLVMModuleCreateWithName in -lLLVMCore" >&5
-$as_echo_n "checking for LLVMModuleCreateWithName in -lLLVMCore... " >&6; }
-if ${ac_cv_lib_LLVMCore_LLVMModuleCreateWithName+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lLLVMCore  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char LLVMModuleCreateWithName ();
-int
-main ()
-{
-return LLVMModuleCreateWithName ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"; then :
-  ac_cv_lib_LLVMCore_LLVMModuleCreateWithName=yes
-else
-  ac_cv_lib_LLVMCore_LLVMModuleCreateWithName=no
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_LLVMCore_LLVMModuleCreateWithName" >&5
-$as_echo "$ac_cv_lib_LLVMCore_LLVMModuleCreateWithName" >&6; }
-if test "x$ac_cv_lib_LLVMCore_LLVMModuleCreateWithName" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-@%:@define HAVE_LIBLLVMCORE 1
-_ACEOF
-
-  LIBS="-lLLVMCore $LIBS"
-
-fi
-
-if test "$ac_cv_lib_LLVMCore_LLVMModuleCreateWithName" = "no"; then
-  unset ac_cv_lib_LLVMCore_LLVMModuleCreateWithName
-  LIBS="-lLLVMSupport $save_LIBS"
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for LLVMModuleCreateWithName in -lLLVMCore" >&5
-$as_echo_n "checking for LLVMModuleCreateWithName in -lLLVMCore... " >&6; }
-if ${ac_cv_lib_LLVMCore_LLVMModuleCreateWithName+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lLLVMCore  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char LLVMModuleCreateWithName ();
-int
-main ()
-{
-return LLVMModuleCreateWithName ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_cxx_try_link "$LINENO"; then :
-  ac_cv_lib_LLVMCore_LLVMModuleCreateWithName=yes
-else
-  ac_cv_lib_LLVMCore_LLVMModuleCreateWithName=no
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_LLVMCore_LLVMModuleCreateWithName" >&5
-$as_echo "$ac_cv_lib_LLVMCore_LLVMModuleCreateWithName" >&6; }
-if test "x$ac_cv_lib_LLVMCore_LLVMModuleCreateWithName" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-@%:@define HAVE_LIBLLVMCORE 1
-_ACEOF
-
-  LIBS="-lLLVMCore $LIBS"
-
-else
-  as_fn_error $? "could not find LLVM C bindings" "$LINENO" 5
-fi
-
-fi
+#AC_CHECK_LIB(LLVMCore, LLVMModuleCreateWithName, [], [])
+#if test "$ac_cv_lib_LLVMCore_LLVMModuleCreateWithName" = "no"; then
+#  unset ac_cv_lib_LLVMCore_LLVMModuleCreateWithName
+#  LIBS="-lLLVMSupport $save_LIBS"
+#  AC_CHECK_LIB(LLVMCore, LLVMModuleCreateWithName, [],
+#    [AC_MSG_ERROR(could not find LLVM C bindings)])
+#fi
 
 llvm_num_version="`echo $llvm_version | tr . 0`"
 

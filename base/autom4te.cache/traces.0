@@ -227,14 +227,6 @@ m4trace:configure.ac:112: -1- AH_OUTPUT([HAVE_LLVM_SUPPORT_DYNAMICLIBRARY_H], [/
 @%:@undef HAVE_LLVM_SUPPORT_DYNAMICLIBRARY_H])
 m4trace:configure.ac:112: -1- AC_DEFINE_TRACE_LITERAL([HAVE_LLVM_SUPPORT_DYNAMICLIBRARY_H])
 m4trace:configure.ac:112: -1- m4_pattern_allow([^HAVE_LLVM_SUPPORT_DYNAMICLIBRARY_H$])
-m4trace:configure.ac:120: -1- AH_OUTPUT([HAVE_LIBLLVMCORE], [/* Define to 1 if you have the `LLVMCore\' library (-lLLVMCore). */
-@%:@undef HAVE_LIBLLVMCORE])
-m4trace:configure.ac:120: -1- AC_DEFINE_TRACE_LITERAL([HAVE_LIBLLVMCORE])
-m4trace:configure.ac:120: -1- m4_pattern_allow([^HAVE_LIBLLVMCORE$])
-m4trace:configure.ac:124: -1- AH_OUTPUT([HAVE_LIBLLVMCORE], [/* Define to 1 if you have the `LLVMCore\' library (-lLLVMCore). */
-@%:@undef HAVE_LIBLLVMCORE])
-m4trace:configure.ac:124: -1- AC_DEFINE_TRACE_LITERAL([HAVE_LIBLLVMCORE])
-m4trace:configure.ac:124: -1- m4_pattern_allow([^HAVE_LIBLLVMCORE$])
 m4trace:configure.ac:129: -1- AC_DEFINE_TRACE_LITERAL([HS_LLVM_VERSION])
 m4trace:configure.ac:129: -1- m4_pattern_allow([^HS_LLVM_VERSION$])
 m4trace:configure.ac:129: -1- AH_OUTPUT([HS_LLVM_VERSION], [/* Define to the version of LLVM, e.g. 209 for 2.9. */

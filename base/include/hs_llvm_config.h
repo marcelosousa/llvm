@@ -5,7 +5,7 @@
 #define HAVE_INTTYPES_H 1
 
 /* Define to 1 if you have the `LLVMCore' library (-lLLVMCore). */
-#define HAVE_LIBLLVMCORE 1
+/* #undef HAVE_LIBLLVMCORE */
 
 /* Define to 1 if you have the <llvm/ADT/StringRef.h> header file. */
 #define HAVE_LLVM_ADT_STRINGREF_H 1
