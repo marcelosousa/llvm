@@ -41,6 +41,7 @@ module LLVM.FFI.Core
     , deleteTypeName
 #endif
     , getTypeKind
+    , getTypeKindCUInt
     , TypeKind(..)
 
     -- ** Integer types
@@ -293,6 +294,7 @@ module LLVM.FFI.Core
     , brInstIsConditional         -- added
     , allocaGetAlignment          -- added
     , allocaGetAllocatedType      -- added
+    , storeGetAlignment 
 
     -- * Instruction building
     , Builder
@@ -1146,6 +1148,9 @@ foreign import ccall unsafe "LLVMAllocaGetAlignment" allocaGetAlignment
 foreign import ccall unsafe "LLVMAllocaGetAllocatedType" allocaGetAllocatedType
     :: ValueRef -> IO TypeRef
 
+foreign import ccall unsafe "LLVMStoreGetAlignment" storeGetAlignment
+    :: ValueRef -> IO CUInt
+
 foreign import ccall unsafe "LLVMCmpInstGetPredicate" cmpInstGetPredicate
     :: ValueRef -> IO Int
 
@@ -1336,6 +1341,7 @@ type TypeHandleRef = Ptr TypeHandle
 
 data TypeKind
     = VoidTypeKind
+    | HalfTypeKind
     | FloatTypeKind
     | DoubleTypeKind
     | X86_FP80TypeKind
@@ -1347,8 +1353,9 @@ data TypeKind
     | StructTypeKind
     | ArrayTypeKind
     | PointerTypeKind
-    | OpaqueTypeKind
     | VectorTypeKind
+    | MetadataTypeKind
+    | X86_MMXTypeKind
     deriving (Eq, Ord, Enum, Bounded, Show, Read, Typeable)
 
 getTypeKind :: TypeRef -> IO TypeKind

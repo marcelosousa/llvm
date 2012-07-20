@@ -41,6 +41,11 @@ LLVMTypeRef LLVMAllocaGetAllocatedType(LLVMValueRef Alloca){
   return wrap(unwrap<AllocaInst>(Alloca)->getAllocatedType());
 }
 
+/*--.. Operations on store instruction ....................................--*/
+unsigned LLVMStoreGetAlignment(LLVMValueRef Store){
+  return unwrap<StoreInst>(Store)->getAlignment(); 
+}
+
 LLVMTypeRef LLVMGetFunctionReturnType(LLVMValueRef Fn){
   return wrap(unwrap<Function>(Fn)->getReturnType());
 }
