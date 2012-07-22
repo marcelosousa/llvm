@@ -46,6 +46,10 @@ unsigned LLVMStoreGetAlignment(LLVMValueRef Store){
   return unwrap<StoreInst>(Store)->getAlignment(); 
 }
 
+unsigned LLVMLoadGetAlignment(LLVMValueRef Load){
+  return unwrap<LoadInst>(Load)->getAlignment(); 
+}
+
 LLVMTypeRef LLVMGetFunctionReturnType(LLVMValueRef Fn){
   return wrap(unwrap<Function>(Fn)->getReturnType());
 }

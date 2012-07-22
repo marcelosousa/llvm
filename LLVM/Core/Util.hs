@@ -24,7 +24,7 @@ module LLVM.Core.Util(
     -- * Instructions
     makeCall, makeInvoke,
     makeCallWithCc, makeInvokeWithCc,
-    withValue, getInstructions, getOperands,
+    withValue, getInstructions, getOperands, 
     -- * Uses and Users
     hasUsers, getUsers, getUses, getUser, isChildOf, getDep,
     -- * Misc

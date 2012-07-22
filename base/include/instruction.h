@@ -17,6 +17,8 @@ LLVMTypeRef LLVMAllocaGetAllocatedType(LLVMValueRef Alloca);
 
 unsigned LLVMStoreGetAlignment(LLVMValueRef Store);
 
+unsigned LLVMLoadGetAlignment(LLVMValueRef Load);
+
 LLVMBool LLVMReturnInstHasReturnValue(LLVMValueRef Return);
 
 LLVMTypeRef LLVMGetFunctionReturnType(LLVMValueRef Fn);

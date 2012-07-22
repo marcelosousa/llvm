@@ -37,6 +37,7 @@ extra-source-files:
     include/hs_llvm_config.h.in
     include/support.h
     include/instruction.h
+    include/constant.h
     llvm-base.buildinfo.in
     llvm-base.buildinfo.windows.in
     tools/*.hs
@@ -98,6 +99,7 @@ library
     cbits/malloc.c
     cbits/support.cpp
     cbits/instruction.cpp
+    cbits/constant.cpp
 
 source-repository head
   type:     git

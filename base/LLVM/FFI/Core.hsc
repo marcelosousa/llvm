@@ -119,6 +119,17 @@ module LLVM.FFI.Core
     , isConstant
     , isNull
     , isUndef
+    , getConstantClass
+    , getGlobalValueClass 
+    , getConstantDataSequentialClass
+    , getConstantTy
+
+    -- ** Constant Data Sequential
+    , constantValueGetElemType
+    , constantValueGetNumElem
+    , constantValueIsString
+    , constantValueGetAsString
+    , constantValueGetElemByteSize
 
     -- ** Global variables, functions, and aliases (globals)
     , Linkage(..)
@@ -140,14 +151,6 @@ module LLVM.FFI.Core
     , setAlignment
      
     , hasUnnamedAddr
-    , getConstantTy
-
-    -- ** Constant Data Sequential
-    , constantValueGetElemType
-    , constantValueGetNumElem
-    , constantValueIsString
-    , constantValueGetAsString
-    , constantValueGetElemByteSize
  
     -- ** Global variables
     , addGlobal
@@ -288,6 +291,7 @@ module LLVM.FFI.Core
 
     -- * Instruction field accessors
     , instGetOpcode, cmpInstGetPredicate
+    , instGetOpcodeName
     , returnInstGetReturnValue    -- added
     , returnInstGetNumSuccessors  -- added
     , returnInstHasReturnValue    -- added
@@ -295,6 +299,7 @@ module LLVM.FFI.Core
     , allocaGetAlignment          -- added
     , allocaGetAllocatedType      -- added
     , storeGetAlignment 
+    , loadGetAlignment
 
     -- * Instruction building
     , Builder
@@ -754,6 +759,33 @@ foreign import ccall unsafe "LLVMConstNull" constNull
 foreign import ccall unsafe "LLVMIsConstant" isConstant
     :: ValueRef -> IO CInt
 
+foreign import ccall unsafe "LLVMGetConstantClass" getConstantClass
+    :: ValueRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMGetGlobalValueClass" getGlobalValueClass
+    :: ValueRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMGetConstantDataSequentialClass" getConstantDataSequentialClass
+    :: ValueRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMGetConstantTy" getConstantTy
+    :: ValueRef -> IO CString
+
+foreign import ccall unsafe "LLVMConstantValueGetElemType" constantValueGetElemType
+    :: ValueRef -> IO TypeRef
+
+foreign import ccall unsafe "LLVMConstantValueGetNumElem" constantValueGetNumElem
+    :: ValueRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMConstantValueGetElemByteSize" constantValueGetElemByteSize
+    :: ValueRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMConstantValueGetAsString" constantValueGetAsString
+    :: ValueRef -> IO CString
+
+foreign import ccall unsafe "LLVMConstantValueIsString" constantValueIsString
+    :: ValueRef -> IO CUInt
+
 foreign import ccall unsafe "LLVMGetUndef" getUndef
     :: TypeRef -> ValueRef
 
@@ -900,24 +932,6 @@ toLinkage c | c == (#const LLVMLinkerPrivateWeakLinkage)    = LinkerPrivateWeakL
 toLinkage c | c == (#const LLVMLinkerPrivateWeakDefAutoLinkage) = LinkerPrivateWeakDefAutoLinkage
 toLinkage _ = error "toLinkage: bad value"
 
-
-foreign import ccall unsafe "LLVMGetConstantTy" getConstantTy
-    :: ValueRef -> IO CString
-
-foreign import ccall unsafe "LLVMConstantValueGetElemType" constantValueGetElemType
-    :: ValueRef -> IO TypeRef
-
-foreign import ccall unsafe "LLVMConstantValueGetNumElem" constantValueGetNumElem
-    :: ValueRef -> IO CUInt
-
-foreign import ccall unsafe "LLVMConstantValueGetElemByteSize" constantValueGetElemByteSize
-    :: ValueRef -> IO CUInt
-
-foreign import ccall unsafe "LLVMConstantValueGetAsString" constantValueGetAsString
-    :: ValueRef -> IO CString
-
-foreign import ccall unsafe "LLVMConstantValueIsString" constantValueIsString
-    :: ValueRef -> IO CUInt
 
 foreign import ccall unsafe "LLVMHasUnnamedAddr" hasUnnamedAddr
     :: ValueRef -> IO CUInt
@@ -1127,6 +1141,9 @@ foreign import ccall unsafe "LLVMInsertBasicBlock" insertBasicBlock
 foreign import ccall unsafe "LLVMDeleteBasicBlock" deleteBasicBlock
     :: BasicBlockRef -> IO ()
 
+foreign import ccall unsafe "LLVMInstGetOpcodeName" instGetOpcodeName
+    :: ValueRef -> IO CString
+
 foreign import ccall unsafe "LLVMInstGetOpcode" instGetOpcode
     :: ValueRef -> IO Int
 
@@ -1149,6 +1166,9 @@ foreign import ccall unsafe "LLVMAllocaGetAllocatedType" allocaGetAllocatedType
     :: ValueRef -> IO TypeRef
 
 foreign import ccall unsafe "LLVMStoreGetAlignment" storeGetAlignment
+    :: ValueRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMLoadGetAlignment" loadGetAlignment
     :: ValueRef -> IO CUInt
 
 foreign import ccall unsafe "LLVMCmpInstGetPredicate" cmpInstGetPredicate
