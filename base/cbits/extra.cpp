@@ -199,6 +199,13 @@ unsigned LLVMInstGetOpcode(LLVMValueRef inst)
     return instp->getOpcode();
 }
 
+unsigned LLVMConstGetOpcode(LLVMValueRef ConstantVal) {
+    llvm::ConstantExpr *cexpr = llvm::unwrap<llvm::ConstantExpr>(ConstantVal);
+    assert(cexpr);
+    return cexpr->getOpcode();
+}
+
+
 unsigned LLVMCmpInstGetPredicate(LLVMValueRef cmpinst)
 {
     llvm::CmpInst *instp = llvm::unwrap<llvm::CmpInst>(cmpinst);

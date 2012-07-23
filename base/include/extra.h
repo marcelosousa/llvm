@@ -152,6 +152,8 @@ const char *LLVMInstGetOpcodeName(LLVMValueRef inst);
 /* Wraps llvm::Instruction::getOpcode(). */
 unsigned LLVMInstGetOpcode(LLVMValueRef inst);
 
+unsigned LLVMConstGetOpcode(LLVMValueRef ConstantVal);
+
 /* Wraps llvm::CmpInst::getPredicate(). */
 unsigned LLVMCmpInstGetPredicate(LLVMValueRef cmpinst);
 

@@ -57,3 +57,17 @@ LLVMTypeRef LLVMGetFunctionReturnType(LLVMValueRef Fn){
 LLVMBool LLVMHasUnnamedAddr(LLVMValueRef Global){
    return unwrap<GlobalValue>(Global)->hasUnnamedAddr();
 }
+
+/*--.. Operations on select instruction ..................................--*/
+LLVMValueRef LLVMSelectGetCondition(LLVMValueRef Select){
+  return wrap(unwrap<SelectInst>(Select)->getCondition());
+}
+
+LLVMValueRef LLVMSelectGetTrueValue(LLVMValueRef Select){
+  return wrap(unwrap<SelectInst>(Select)->getTrueValue());
+}
+
+LLVMValueRef LLVMSelectGetFalseValue(LLVMValueRef Select){
+  return wrap(unwrap<SelectInst>(Select)->getFalseValue());
+}
+

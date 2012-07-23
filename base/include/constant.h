@@ -50,6 +50,22 @@ const char *LLVMConstantValueGetAsString(LLVMValueRef Val);
 
 unsigned LLVMConstantValueGetElemByteSize(LLVMValueRef Val);
 
+LLVMTypeRef LLVMConstantArrayGetType(LLVMValueRef Val);
+
+unsigned LLVMArrayTypeGetNumElements(LLVMTypeRef Ty);
+
+LLVMTypeRef LLVMConstantStructGetType(LLVMValueRef Val);
+
+unsigned LLVMStructTypeGetNumElements(LLVMTypeRef Ty);
+
+LLVMBool LLVMHasNameStruct(LLVMTypeRef StructTy);
+
+unsigned LLVMConstGetNumOperands(LLVMValueRef Val);
+
+LLVMValueRef LLVMConstGetOperand(LLVMValueRef Val, unsigned Index);
+
+//float LLVMGetFPValue(LLVMValueRef C);
+
 #ifdef __cplusplus
 } /* extern "C" */
 #endif

@@ -59,6 +59,7 @@ module LLVM.FFI.Core
     , x86FP80Type
     , fp128Type
     , ppcFP128Type
+--    , getFPValue
 
     -- ** Function types
     , functionType
@@ -89,6 +90,7 @@ module LLVM.FFI.Core
     , countStructElementTypes
     , getStructElementTypes
     , isPackedStruct
+    , hasNameStruct
 #if HS_LLVM_VERSION >= 300
     , structCreateNamed
     , getStructName
@@ -123,6 +125,8 @@ module LLVM.FFI.Core
     , getGlobalValueClass 
     , getConstantDataSequentialClass
     , getConstantTy
+    , constGetNumOperands
+    , constGetOperand
 
     -- ** Constant Data Sequential
     , constantValueGetElemType
@@ -214,6 +218,10 @@ module LLVM.FFI.Core
 
     -- ** Composite constants
     , constArray
+    , constantArrayGetType
+    , arrayTypeGetNumElements
+    , constantStructGetType
+    , structTypeGetNumElements
     , constString
     , constStruct
     , constVector
@@ -293,6 +301,7 @@ module LLVM.FFI.Core
     -- * Instruction field accessors
     , instGetOpcode, cmpInstGetPredicate
     , instGetOpcodeName
+    , constGetOpcode
     , returnInstGetReturnValue    -- added
     , returnInstGetNumSuccessors  -- added
     , returnInstHasReturnValue    -- added
@@ -301,6 +310,9 @@ module LLVM.FFI.Core
     , allocaGetAllocatedType      -- added
     , storeGetAlignment 
     , loadGetAlignment
+    , selectGetCondition
+    , selectGetTrueValue
+    , selectGetFalseValue
 
     -- * Instruction building
     , Builder
@@ -574,9 +586,9 @@ module LLVM.FFI.Core
 import Data.Typeable(Typeable)
 import Foreign.C.String (CString)
 #if __GLASGOW_HASKELL__ >= 704
-import Foreign.C.Types (CDouble(..), CInt(..), CUInt(..), CLLong(..), CULLong(..))
+import Foreign.C.Types (CDouble(..), CFloat, CInt(..), CUInt(..), CLLong(..), CULLong(..))
 #else
-import Foreign.C.Types (CDouble, CInt, CUInt, CLLong, CULLong)
+import Foreign.C.Types (CDouble, CFloat, CInt, CUInt, CLLong, CULLong)
 #endif
 import Foreign.Ptr (Ptr, FunPtr)
 
@@ -754,6 +766,18 @@ foreign import ccall unsafe "LLVMDumpValue" dumpValue
 foreign import ccall unsafe "LLVMConstAllOnes" constAllOnes
     :: TypeRef -> ValueRef
 
+foreign import ccall unsafe "LLVMConstantArrayGetType" constantArrayGetType 
+    :: ValueRef -> IO TypeRef
+
+foreign import ccall unsafe "LLVMArrayTypeGetNumElements" arrayTypeGetNumElements
+    :: TypeRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMConstantStructGetType" constantStructGetType 
+    :: ValueRef -> IO TypeRef
+
+foreign import ccall unsafe "LLVMStructTypeGetNumElements" structTypeGetNumElements
+    :: TypeRef -> IO CUInt
+
 foreign import ccall unsafe "LLVMConstArray" constArray
     :: TypeRef -> Ptr ValueRef -> CUInt -> ValueRef
 
@@ -774,6 +798,12 @@ foreign import ccall unsafe "LLVMGetConstantDataSequentialClass" getConstantData
 
 foreign import ccall unsafe "LLVMGetConstantTy" getConstantTy
     :: ValueRef -> IO CString
+
+foreign import ccall unsafe "LLVMConstGetNumOperands" constGetNumOperands
+    :: ValueRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMConstGetOperand" constGetOperand
+    :: ValueRef -> CUInt -> IO ValueRef
 
 foreign import ccall unsafe "LLVMConstantValueGetElemType" constantValueGetElemType
     :: ValueRef -> IO TypeRef
@@ -1148,6 +1178,9 @@ foreign import ccall unsafe "LLVMDeleteBasicBlock" deleteBasicBlock
 foreign import ccall unsafe "LLVMInstGetOpcodeName" instGetOpcodeName
     :: ValueRef -> IO CString
 
+foreign import ccall unsafe "LLVMConstGetOpcode" constGetOpcode
+    :: ValueRef -> IO Int
+
 foreign import ccall unsafe "LLVMInstGetOpcode" instGetOpcode
     :: ValueRef -> IO Int
 
@@ -1174,6 +1207,15 @@ foreign import ccall unsafe "LLVMStoreGetAlignment" storeGetAlignment
 
 foreign import ccall unsafe "LLVMLoadGetAlignment" loadGetAlignment
     :: ValueRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMSelectGetCondition" selectGetCondition 
+    :: ValueRef -> IO ValueRef
+
+foreign import ccall unsafe "LLVMSelectGetTrueValue" selectGetTrueValue 
+    :: ValueRef -> IO ValueRef
+
+foreign import ccall unsafe "LLVMSelectGetFalseValue" selectGetFalseValue 
+    :: ValueRef -> IO ValueRef
 
 foreign import ccall unsafe "LLVMCmpInstGetPredicate" cmpInstGetPredicate
     :: ValueRef -> IO Int
@@ -1350,7 +1392,11 @@ foreign import ccall unsafe "LLVMCountStructElementTypes"
     countStructElementTypes :: TypeRef -> IO CUInt
 foreign import ccall unsafe "LLVMGetStructElementTypes" getStructElementTypes
     :: TypeRef -> Ptr TypeRef -> IO ()
+
 foreign import ccall unsafe "LLVMIsPackedStruct" isPackedStruct
+    :: TypeRef -> IO CInt
+
+foreign import ccall unsafe "LLVMHasNameStruct" hasNameStruct
     :: TypeRef -> IO CInt
 
 data MemoryBuffer
@@ -1783,6 +1829,9 @@ foreign import ccall unsafe "LLVMConstIntGetSExtValue" constIntGetSExtValue
     :: ValueRef -> IO CLLong
 foreign import ccall unsafe "LLVMConstIntGetZExtValue" constIntGetZExtValue
     :: ValueRef -> IO CULLong
+{-foreign import ccall unsafe "LLVMGetFPValue" getFPValue 
+    :: ValueRef -> IO CFloat
+-}
 foreign import ccall unsafe "LLVMConstNSWMul" constNSWMul
     :: ValueRef -> ValueRef -> IO ValueRef
 foreign import ccall unsafe "LLVMConstNSWNeg" constNSWNeg

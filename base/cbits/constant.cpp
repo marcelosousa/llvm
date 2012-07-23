@@ -132,3 +132,56 @@ unsigned LLVMConstantValueGetElemByteSize(LLVMValueRef Val){
   }
 }
 
+LLVMTypeRef LLVMConstantArrayGetType(LLVMValueRef Val){
+  Constant *C = dyn_cast<Constant>(unwrap(Val));
+  assert(C);
+  ConstantArray *CA = dyn_cast<ConstantArray>(C);
+  assert(CA);
+  return wrap(C->getType());
+}
+
+unsigned LLVMArrayTypeGetNumElements(LLVMTypeRef Ty){
+  ArrayType *AT = dyn_cast<ArrayType>(unwrap(Ty));
+  assert(AT);
+  return AT->getNumElements();
+}
+
+LLVMTypeRef LLVMConstantStructGetType(LLVMValueRef Val){
+  Constant *C = dyn_cast<Constant>(unwrap(Val));
+  assert(C);
+  ConstantStruct *CA = dyn_cast<ConstantStruct>(C);
+  assert(CA);
+  return wrap(C->getType());
+}
+
+LLVMBool LLVMHasNameStruct(LLVMTypeRef StructTy) {
+  return unwrap<StructType>(StructTy)->hasName();
+}
+
+unsigned LLVMStructTypeGetNumElements(LLVMTypeRef Ty){
+  StructType *ST = dyn_cast<StructType>(unwrap(Ty));
+  assert(ST);
+  return ST->getNumElements();
+}
+
+unsigned LLVMConstGetNumOperands(LLVMValueRef Val){
+  Constant *C = dyn_cast<Constant>(unwrap(Val));
+  assert(C);
+  return C->getNumOperands();
+}
+
+LLVMValueRef LLVMConstGetOperand(LLVMValueRef Val, unsigned Index) {
+  Constant *C = dyn_cast<Constant>(unwrap(Val));
+  return wrap(C->getOperand(Index));
+}
+
+/*
+float LLVMGetFPValue(LLVMValueRef C){
+  if (ConstantFP *CFP = dyn_cast<ConstantFP>(C)) {
+    if (CFP->getType()->isFloatTy()) {
+      return CFP->getValueAPF().convertToFloat();
+    }
+  }
+  return 0;
+}
+*/

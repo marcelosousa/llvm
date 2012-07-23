@@ -25,6 +25,12 @@ LLVMTypeRef LLVMGetFunctionReturnType(LLVMValueRef Fn);
 
 LLVMBool LLVMHasUnnamedAddr(LLVMValueRef Global);
 
+LLVMValueRef LLVMSelectGetCondition(LLVMValueRef Select);
+
+LLVMValueRef LLVMSelectGetTrueValue(LLVMValueRef Select);
+
+LLVMValueRef LLVMSelectGetFalseValue(LLVMValueRef Select);
+
 #ifdef __cplusplus
 } /* extern "C" */
 #endif
