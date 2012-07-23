@@ -51,6 +51,7 @@ LLVMGlobalValueClass LLVMGetGlobalValueClass(LLVMValueRef GlobalVal){
      return LLVMGlobalVariable;
 }
 
+/******** Constant Data Sequential  */
 LLVMConstantDataSequentialClass LLVMGetConstantDataSequentialClass(LLVMValueRef CDataSequential){
   ConstantDataSequential *CDS = dyn_cast<ConstantDataSequential>(unwrap(CDataSequential));
   assert(CDS);
@@ -59,6 +60,75 @@ LLVMConstantDataSequentialClass LLVMGetConstantDataSequentialClass(LLVMValueRef 
      return LLVMConstantDataArray;
   else 
      return LLVMConstantDataVector;
- 
+}
+
+const char *LLVMGetConstantTy(LLVMValueRef Val){
+  if (Constant *C = dyn_cast<Constant>(unwrap(Val))){
+   if(isa<BlockAddress>(C))
+      return "block address";
+   else if(isa<ConstantArray>(C))
+      return "constant array";
+   else if(isa<ConstantDataSequential>(C))
+      return "constant data sequential";
+   else if(isa<GlobalValue>(C))
+      return "global value";
+   else if(isa<ConstantStruct>(C))
+      return "global struct";
+   else if(isa<ConstantVector>(C))
+      return "constant vector";
+   else if(isa<ConstantInt>(C))
+      return "constant int";
+   else if(isa<UndefValue>(C))
+      return "undef value";
+   else
+      return "incomplete";
+  }
+  return "bad";
+}
+
+LLVMBool LLVMConstantValueIsString(LLVMValueRef Val){
+  if (Constant *C = dyn_cast<Constant>(unwrap(Val))){
+   if(isa<ConstantDataSequential>(C)){
+    ConstantDataSequential *CD = dyn_cast<ConstantDataSequential>(C);
+    return CD->isString();
+   }
+  }
+
+}
+
+LLVMTypeRef LLVMConstantValueGetElemType(LLVMValueRef Val){
+  if (Constant *C = dyn_cast<Constant>(unwrap(Val))){
+   if(isa<ConstantDataSequential>(C)){
+    ConstantDataSequential *CD = dyn_cast<ConstantDataSequential>(C);
+    return wrap(CD->getElementType());
+   }
+  }
+}
+
+unsigned LLVMConstantValueGetNumElem(LLVMValueRef Val){
+  if (Constant *C = dyn_cast<Constant>(unwrap(Val))){
+   if(isa<ConstantDataSequential>(C)){
+    ConstantDataSequential *CD = dyn_cast<ConstantDataSequential>(C);
+    return CD->getNumElements();
+   }
+  }
+}
+
+const char *LLVMConstantValueGetAsString(LLVMValueRef Val){
+  if (Constant *C = dyn_cast<Constant>(unwrap(Val))){
+   if(isa<ConstantDataSequential>(C)){
+    ConstantDataSequential *CD = dyn_cast<ConstantDataSequential>(C);
+    return CD->getAsString().data();
+   }
+  }
+}
+
+unsigned LLVMConstantValueGetElemByteSize(LLVMValueRef Val){
+  if (Constant *C = dyn_cast<Constant>(unwrap(Val))){
+   if(isa<ConstantDataSequential>(C)){
+    ConstantDataSequential *CD = dyn_cast<ConstantDataSequential>(C);
+    return CD->getElementByteSize();
+   }
+  }
 }
 

@@ -156,6 +156,7 @@ module LLVM.FFI.Core
     , addGlobal
     , getNamedGlobal
     , deleteGlobal
+    , hasInitializer
     , getInitializer
     , setInitializer
     , isThreadLocal
@@ -719,6 +720,9 @@ foreign import ccall unsafe "LLVMSetInitializer" setInitializer
 
 foreign import ccall unsafe "LLVMGetNamedGlobal" getNamedGlobal
     :: ModuleRef -> CString -> IO ValueRef
+
+foreign import ccall unsafe "LLVMHasInitializer" hasInitializer
+    :: ValueRef -> IO CInt
 
 foreign import ccall unsafe "LLVMGetInitializer" getInitializer
     :: ValueRef -> IO ValueRef
