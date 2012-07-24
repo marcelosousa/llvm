@@ -124,7 +124,10 @@ module LLVM.FFI.Core
     , getConstantClass
     , getGlobalValueClass 
     , getConstantDataSequentialClass
+    , getConstantFPClass
     , getConstantTy
+    , getFPValueFloat
+    , getFPValueDouble
     , constGetNumOperands
     , constGetOperand
 
@@ -794,6 +797,9 @@ foreign import ccall unsafe "LLVMGetGlobalValueClass" getGlobalValueClass
     :: ValueRef -> IO CUInt
 
 foreign import ccall unsafe "LLVMGetConstantDataSequentialClass" getConstantDataSequentialClass
+    :: ValueRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMGetConstantFPClass" getConstantFPClass 
     :: ValueRef -> IO CUInt
 
 foreign import ccall unsafe "LLVMGetConstantTy" getConstantTy
@@ -1829,9 +1835,13 @@ foreign import ccall unsafe "LLVMConstIntGetSExtValue" constIntGetSExtValue
     :: ValueRef -> IO CLLong
 foreign import ccall unsafe "LLVMConstIntGetZExtValue" constIntGetZExtValue
     :: ValueRef -> IO CULLong
-{-foreign import ccall unsafe "LLVMGetFPValue" getFPValue 
+
+foreign import ccall unsafe "LLVMGetFPValueFloat" getFPValueFloat 
     :: ValueRef -> IO CFloat
--}
+
+foreign import ccall unsafe "LLVMGetFPValueDouble" getFPValueDouble
+    :: ValueRef -> IO CDouble
+
 foreign import ccall unsafe "LLVMConstNSWMul" constNSWMul
     :: ValueRef -> ValueRef -> IO ValueRef
 foreign import ccall unsafe "LLVMConstNSWNeg" constNSWNeg

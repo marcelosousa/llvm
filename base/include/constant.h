@@ -32,11 +32,18 @@ typedef enum {
   LLVMConstantDataVector
 } LLVMConstantDataSequentialClass;
 
+typedef enum {
+  LLVMFloatValue,
+  LLVMDoubleValue,
+} LLVMConstantFPClass;
+
 LLVMConstantClass LLVMGetConstantClass(LLVMValueRef Val);
 
 LLVMGlobalValueClass LLVMGetGlobalValueClass(LLVMValueRef GlobalVal);
 
 LLVMConstantDataSequentialClass LLVMGetConstantDataSequentialClass(LLVMValueRef CDataSequential);
+
+LLVMConstantFPClass LLVMGetConstantFPClass(LLVMValueRef C);
 
 const char *LLVMGetConstantTy(LLVMValueRef Val);
 
@@ -64,7 +71,9 @@ unsigned LLVMConstGetNumOperands(LLVMValueRef Val);
 
 LLVMValueRef LLVMConstGetOperand(LLVMValueRef Val, unsigned Index);
 
-//float LLVMGetFPValue(LLVMValueRef C);
+float LLVMGetFPValueFloat(LLVMValueRef C);
+
+double LLVMGetFPValueDouble(LLVMValueRef C);
 
 #ifdef __cplusplus
 } /* extern "C" */

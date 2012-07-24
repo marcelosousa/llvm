@@ -175,13 +175,26 @@ LLVMValueRef LLVMConstGetOperand(LLVMValueRef Val, unsigned Index) {
   return wrap(C->getOperand(Index));
 }
 
-/*
-float LLVMGetFPValue(LLVMValueRef C){
-  if (ConstantFP *CFP = dyn_cast<ConstantFP>(C)) {
-    if (CFP->getType()->isFloatTy()) {
-      return CFP->getValueAPF().convertToFloat();
-    }
-  }
-  return 0;
+LLVMConstantFPClass LLVMGetConstantFPClass(LLVMValueRef C){
+  ConstantFP *CFP = dyn_cast<ConstantFP>(unwrap(C));
+  assert(CFP);
+
+  if(CFP->getType()->isFloatTy())
+     return LLVMFloatValue;
+  else 
+     return LLVMDoubleValue;
 }
-*/
+
+float LLVMGetFPValueFloat(LLVMValueRef C){
+  ConstantFP *CFP = dyn_cast<ConstantFP>(unwrap(C));
+  assert(CFP);
+
+  return CFP->getValueAPF().convertToFloat();
+}
+
+double LLVMGetFPValueDouble(LLVMValueRef C){
+  ConstantFP *CFP = dyn_cast<ConstantFP>(unwrap(C));
+  assert(CFP);
+
+  return CFP->getValueAPF().convertToDouble();
+}
