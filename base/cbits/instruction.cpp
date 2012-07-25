@@ -71,31 +71,6 @@ LLVMValueRef LLVMSelectGetFalseValue(LLVMValueRef Select){
   return wrap(unwrap<SelectInst>(Select)->getFalseValue());
 }
 
-unsigned LLVMGetFirstIdx(LLVMValueRef ExtractVal) {
-  ExtractValueInst *extr = unwrap<ExtractValueInst>(ExtractVal);
-  assert(extr);
-  ExtractValueInst::idx_iterator I = extr->idx_begin();
-  if (I == extr->idx_end())
-    return 0;
-  return *I;
-}
-
-unsigned LLVMGetLastIdx(LLVMValueRef ExtractVal) {
-  ExtractValueInst *extr = unwrap<ExtractValueInst>(ExtractVal);
-  assert(extr);
-  ExtractValueInst::idx_iterator I = extr->idx_end();
-  if (I == extr->idx_begin())
-    return 0;
-  return *(--I);
-}
-
-unsigned LLVMGetNextIdx(unsigned extr) {
-//  unsigned *extr = unwrap<unsigned>(ExtractVal);
-//  assert(extr);
-  ExtractValueInst::idx_iterator I = &extr;
-  return *I;
-}
-
 unsigned LLVMExtractValueGetNumIndices(LLVMValueRef ExtractVal) {
   ExtractValueInst *extr = unwrap<ExtractValueInst>(ExtractVal);
   assert(extr);
@@ -110,4 +85,14 @@ void LLVMExtractValueGetIndices(LLVMValueRef ExtractVal, unsigned *Indices) {
 //  return extr->getIndices().data();
 }
 
+unsigned LLVMAtomicRMWGetOperation(LLVMValueRef AtomicRMW){
+  AtomicRMWInst *atomic = unwrap<AtomicRMWInst>(AtomicRMW);
+  assert(atomic);
+  return atomic->getOperation();
+}
 
+unsigned LLVMAtomicRMWGetOrdering(LLVMValueRef AtomicRMW){
+  AtomicRMWInst *atomic = unwrap<AtomicRMWInst>(AtomicRMW);
+  assert(atomic);
+  return atomic->getOrdering();
+}

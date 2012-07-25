@@ -319,6 +319,9 @@ module LLVM.FFI.Core
     , selectGetFalseValue
     , extractValueGetIndices
     , extractValueGetNumIndices
+    , atomicRMWGetOperation
+    , atomicRMWGetOrdering
+
     -- * Instruction building
     , Builder
     , BuilderRef
@@ -1175,6 +1178,12 @@ foreign import ccall unsafe "LLVMExtractValueGetIndices" extractValueGetIndices
     -> IO ()
 
 foreign import ccall unsafe "LLVMExtractValueGetNumIndices" extractValueGetNumIndices
+    :: ValueRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMAtomicRMWGetOperation" atomicRMWGetOperation
+    :: ValueRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMAtomicRMWGetOrdering" atomicRMWGetOrdering 
     :: ValueRef -> IO CUInt
 
 foreign import ccall unsafe "LLVMGetEntryBasicBlock" getEntryBasicBlock
