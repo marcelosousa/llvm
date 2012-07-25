@@ -5,6 +5,7 @@
 
 #include "llvm-c/Core.h"
 
+#include "ConstantsContext.h"
 #include "constant.h"
 
 using namespace llvm;
@@ -197,4 +198,9 @@ double LLVMGetFPValueDouble(LLVMValueRef C){
   assert(CFP);
 
   return CFP->getValueAPF().convertToDouble();
+}
+
+unsigned LLVMConstCompareGetPredicate(LLVMValueRef Val){
+  ConstantExpr *CE = dyn_cast<ConstantExpr>(unwrap(Val));
+  return ((const CompareConstantExpr*)CE)->predicate;
 }

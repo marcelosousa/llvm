@@ -71,3 +71,43 @@ LLVMValueRef LLVMSelectGetFalseValue(LLVMValueRef Select){
   return wrap(unwrap<SelectInst>(Select)->getFalseValue());
 }
 
+unsigned LLVMGetFirstIdx(LLVMValueRef ExtractVal) {
+  ExtractValueInst *extr = unwrap<ExtractValueInst>(ExtractVal);
+  assert(extr);
+  ExtractValueInst::idx_iterator I = extr->idx_begin();
+  if (I == extr->idx_end())
+    return 0;
+  return *I;
+}
+
+unsigned LLVMGetLastIdx(LLVMValueRef ExtractVal) {
+  ExtractValueInst *extr = unwrap<ExtractValueInst>(ExtractVal);
+  assert(extr);
+  ExtractValueInst::idx_iterator I = extr->idx_end();
+  if (I == extr->idx_begin())
+    return 0;
+  return *(--I);
+}
+
+unsigned LLVMGetNextIdx(unsigned extr) {
+//  unsigned *extr = unwrap<unsigned>(ExtractVal);
+//  assert(extr);
+  ExtractValueInst::idx_iterator I = &extr;
+  return *I;
+}
+
+unsigned LLVMExtractValueGetNumIndices(LLVMValueRef ExtractVal) {
+  ExtractValueInst *extr = unwrap<ExtractValueInst>(ExtractVal);
+  assert(extr);
+  return extr->getNumIndices();
+}
+
+void LLVMExtractValueGetIndices(LLVMValueRef ExtractVal, unsigned *Indices) {
+  ExtractValueInst *extr = unwrap<ExtractValueInst>(ExtractVal);
+  assert(extr);
+  for (ExtractValueInst::idx_iterator I = extr->idx_begin(), E = extr->idx_end(); I!=E; I++)
+    *Indices++ = *I;
+//  return extr->getIndices().data();
+}
+
+

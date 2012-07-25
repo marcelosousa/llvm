@@ -130,6 +130,7 @@ module LLVM.FFI.Core
     , getFPValueDouble
     , constGetNumOperands
     , constGetOperand
+    , constCompareGetPredicate
 
     -- ** Constant Data Sequential
     , constantValueGetElemType
@@ -316,7 +317,8 @@ module LLVM.FFI.Core
     , selectGetCondition
     , selectGetTrueValue
     , selectGetFalseValue
-
+    , extractValueGetIndices
+    , extractValueGetNumIndices
     -- * Instruction building
     , Builder
     , BuilderRef
@@ -811,6 +813,9 @@ foreign import ccall unsafe "LLVMConstGetNumOperands" constGetNumOperands
 foreign import ccall unsafe "LLVMConstGetOperand" constGetOperand
     :: ValueRef -> CUInt -> IO ValueRef
 
+foreign import ccall unsafe "LLVMConstCompareGetPredicate" constCompareGetPredicate
+    :: ValueRef -> IO CInt
+
 foreign import ccall unsafe "LLVMConstantValueGetElemType" constantValueGetElemType
     :: ValueRef -> IO TypeRef
 
@@ -1163,6 +1168,14 @@ foreign import ccall unsafe "LLVMGetBasicBlocks" getBasicBlocks
     :: ValueRef                 -- ^ function
     -> Ptr BasicBlockRef        -- ^ array to fill out
     -> IO ()
+
+foreign import ccall unsafe "LLVMExtractValueGetIndices" extractValueGetIndices
+    :: ValueRef                 -- ^ function
+    -> Ptr CUInt -- ^ array to fill out
+    -> IO ()
+
+foreign import ccall unsafe "LLVMExtractValueGetNumIndices" extractValueGetNumIndices
+    :: ValueRef -> IO CUInt
 
 foreign import ccall unsafe "LLVMGetEntryBasicBlock" getEntryBasicBlock
     :: ValueRef                 -- ^ function

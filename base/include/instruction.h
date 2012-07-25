@@ -31,6 +31,16 @@ LLVMValueRef LLVMSelectGetTrueValue(LLVMValueRef Select);
 
 LLVMValueRef LLVMSelectGetFalseValue(LLVMValueRef Select);
 
+unsigned LLVMGetFirstIdx(LLVMValueRef ExtractVal);
+
+unsigned LLVMGetLastIdx(LLVMValueRef ExtractVal);
+
+unsigned LLVMGetNextIdx(LLVMValueRef ExtractVal);
+
+unsigned LLVMExtractValueGetNumIndices(LLVMValueRef ExtractVal);
+
+void LLVMExtractValueGetIndices(LLVMValueRef ExtractVal, unsigned *Indices);
+
 #ifdef __cplusplus
 } /* extern "C" */
 #endif

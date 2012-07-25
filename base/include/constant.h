@@ -75,6 +75,8 @@ float LLVMGetFPValueFloat(LLVMValueRef C);
 
 double LLVMGetFPValueDouble(LLVMValueRef C);
 
+unsigned LLVMConstCompareGetPredicate(LLVMValueRef Val);
+
 #ifdef __cplusplus
 } /* extern "C" */
 #endif
