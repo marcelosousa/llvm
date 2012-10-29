@@ -53,10 +53,8 @@ rewriteFunction cret cname cparams =
         params = map renameParam . split (==',') $ cparams
 	params' = if params == ["()"] then [] else params
         name = let (n:ame) = cname in toLower n : ame
-    in foreign ++ "\"LLVM" ++ cname ++ "\" " ++ name ++
-           "\n    :: " ++ intercalate " -> " (params' ++ [ret])
+    in "foreign import ccall unsafe " ++ "\"LLVM" ++ cname ++ "\" " ++ name ++ "\n    :: " ++ intercalate " -> " (params' ++ [ret])
   where renameParam = renameType . dropName . strip
-        foreign = "foreign import ccall unsafe "
     
 rewrite :: Monad m => String -> m [String]
 rewrite s = do

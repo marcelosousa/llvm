@@ -319,6 +319,10 @@ module LLVM.FFI.Core
     , selectGetFalseValue
     , extractValueGetIndices
     , extractValueGetNumIndices
+    , insertValueGetIndices
+    , insertValueGetNumIndices
+    , getAggregateOperand
+    , getInsertedValueOperand
     , atomicRMWGetOperation
     , atomicRMWGetOrdering
 
@@ -1179,6 +1183,20 @@ foreign import ccall unsafe "LLVMExtractValueGetIndices" extractValueGetIndices
 
 foreign import ccall unsafe "LLVMExtractValueGetNumIndices" extractValueGetNumIndices
     :: ValueRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMInsertValueGetIndices" insertValueGetIndices
+    :: ValueRef                 -- ^ function
+    -> Ptr CUInt -- ^ array to fill out
+    -> IO ()
+
+foreign import ccall unsafe "LLVMInsertValueGetNumIndices" insertValueGetNumIndices
+    :: ValueRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMGetAggregateOperand" getAggregateOperand 
+    :: ValueRef -> IO ValueRef
+
+foreign import ccall unsafe "LLVMGetInsertedValueOperand" getInsertedValueOperand 
+    :: ValueRef -> IO ValueRef
 
 foreign import ccall unsafe "LLVMAtomicRMWGetOperation" atomicRMWGetOperation
     :: ValueRef -> IO CUInt

@@ -35,9 +35,17 @@ unsigned LLVMExtractValueGetNumIndices(LLVMValueRef ExtractVal);
 
 void LLVMExtractValueGetIndices(LLVMValueRef ExtractVal, unsigned *Indices);
 
+unsigned LLVMInsertValueGetNumIndices(LLVMValueRef InsertVal);
+
+void LLVMInsertValueGetIndices(LLVMValueRef InsertVal, unsigned *Indices);
+
 unsigned LLVMAtomicRMWGetOperation(LLVMValueRef AtomicRMW);
 
 unsigned LLVMAtomicRMWGetOrdering(LLVMValueRef AtomicRMW);
+
+LLVMValueRef LLVMGetAggregateOperand(LLVMValueRef Insert);
+
+LLVMValueRef LLVMGetInsertedValueOperand(LLVMValueRef Insert);
 
 #ifdef __cplusplus
 } /* extern "C" */
