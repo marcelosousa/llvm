@@ -353,7 +353,7 @@ void LLVMSetDoesNotThrow(LLVMValueRef fn, int DoesNotThrow)
     llvm::Function *fnp = llvm::unwrap<llvm::Function>(fn);
     assert(fnp);
 
-    return fnp->setDoesNotThrow((bool)DoesNotThrow);
+    return fnp->setDoesNotThrow();
 }
 
 LLVMValueRef LLVMGetIntrinsic(LLVMModuleRef module, int id,
@@ -547,7 +547,7 @@ define_pass( InstCount )
 define_pass( InstructionNamer )
 define_pass( LazyValueInfo )
 define_pass( LCSSA )
-define_pass( LoopDependenceAnalysis )
+//define_pass( LoopDependenceAnalysis )
 define_pass( LoopExtractor )
 define_pass( LoopSimplify )
 define_pass( LoopStrengthReduce )
@@ -571,6 +571,6 @@ define_pass( StripNonDebugSymbols )
 define_pass( UnifyFunctionExitNodes )
 
 /* we support only internalize(true) */
-llvm::ModulePass *createInternalize2Pass() { return llvm::createInternalizePass(true); }
-define_pass( Internalize2 )
+//llvm::ModulePass *createInternalize2Pass() { return llvm::createInternalizePass(""); }
+//define_pass( Internalize2 )
 

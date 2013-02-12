@@ -92,7 +92,7 @@ library
       LLVM.Target.X86
       LLVM.Target.XCore
 
-  include-dirs: include
+  include-dirs: include /users/msousa/Tools/llvm-3.2.src/build/include
   C-Sources:
     cbits/extra.cpp
     cbits/free.c

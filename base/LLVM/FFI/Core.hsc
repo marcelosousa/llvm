@@ -325,6 +325,7 @@ module LLVM.FFI.Core
     , getInsertedValueOperand
     , atomicRMWGetOperation
     , atomicRMWGetOrdering
+    , atomicCmpXChgGetOrdering
 
     -- * Instruction building
     , Builder
@@ -962,7 +963,6 @@ fromLinkage GhostLinkage                = (#const LLVMGhostLinkage)
 fromLinkage CommonLinkage               = (#const LLVMCommonLinkage)
 fromLinkage LinkerPrivateLinkage        = (#const LLVMLinkerPrivateLinkage)
 fromLinkage LinkerPrivateWeakLinkage    = (#const LLVMLinkerPrivateWeakLinkage)
-fromLinkage LinkerPrivateWeakDefAutoLinkage = (#const LLVMLinkerPrivateWeakDefAutoLinkage)
 
 toLinkage :: CUInt -> Linkage
 toLinkage c | c == (#const LLVMExternalLinkage)             = ExternalLinkage
@@ -981,7 +981,6 @@ toLinkage c | c == (#const LLVMGhostLinkage)                = GhostLinkage
 toLinkage c | c == (#const LLVMCommonLinkage)               = CommonLinkage
 toLinkage c | c == (#const LLVMLinkerPrivateLinkage)        = LinkerPrivateLinkage
 toLinkage c | c == (#const LLVMLinkerPrivateWeakLinkage)    = LinkerPrivateWeakLinkage
-toLinkage c | c == (#const LLVMLinkerPrivateWeakDefAutoLinkage) = LinkerPrivateWeakDefAutoLinkage
 toLinkage _ = error "toLinkage: bad value"
 
 
@@ -1202,6 +1201,9 @@ foreign import ccall unsafe "LLVMAtomicRMWGetOperation" atomicRMWGetOperation
     :: ValueRef -> IO CUInt
 
 foreign import ccall unsafe "LLVMAtomicRMWGetOrdering" atomicRMWGetOrdering 
+    :: ValueRef -> IO CUInt
+
+foreign import ccall unsafe "LLVMAtomicCmpXchgGetOrdering" atomicCmpXChgGetOrdering 
     :: ValueRef -> IO CUInt
 
 foreign import ccall unsafe "LLVMGetEntryBasicBlock" getEntryBasicBlock

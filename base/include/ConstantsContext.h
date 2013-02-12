@@ -490,7 +490,7 @@ template<>
 struct ConstantCreator<InlineAsm, PointerType, InlineAsmKeyType> {
   static InlineAsm *create(PointerType *Ty, const InlineAsmKeyType &Key) {
     return new InlineAsm(Ty, Key.asm_string, Key.constraints,
-                         Key.has_side_effects, Key.is_align_stack);
+                         Key.has_side_effects, Key.is_align_stack,(llvm::InlineAsm::AsmDialect) 0);
   }
 };
 

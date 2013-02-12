@@ -43,6 +43,8 @@ unsigned LLVMAtomicRMWGetOperation(LLVMValueRef AtomicRMW);
 
 unsigned LLVMAtomicRMWGetOrdering(LLVMValueRef AtomicRMW);
 
+unsigned LLVMAtomicCmpXchgGetOrdering(LLVMValueRef AtomicCmpXchg);
+
 LLVMValueRef LLVMGetAggregateOperand(LLVMValueRef Insert);
 
 LLVMValueRef LLVMGetInsertedValueOperand(LLVMValueRef Insert);

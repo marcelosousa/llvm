@@ -111,6 +111,12 @@ unsigned LLVMAtomicRMWGetOrdering(LLVMValueRef AtomicRMW){
   return atomic->getOrdering();
 }
 
+unsigned LLVMAtomicCmpXchgGetOrdering(LLVMValueRef AtomicCmpXchg){
+  AtomicCmpXchgInst *atomic = unwrap<AtomicCmpXchgInst>(AtomicCmpXchg);
+  assert(atomic);
+  return atomic->getOrdering();
+}
+
 LLVMValueRef LLVMGetAggregateOperand(LLVMValueRef Insert){
   return wrap(unwrap<InsertValueInst>(Insert)->getAggregateOperand());
 }
