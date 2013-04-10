@@ -66,6 +66,7 @@ module LLVM.FFI.Core
     , isFunctionVarArg
     , getReturnType
     , getFunctionReturnType
+    , getFunctionType
     , countParamTypes
     , getParamTypes
 
@@ -691,6 +692,10 @@ foreign import ccall unsafe "LLVMGetReturnType" getReturnType
 
 -- | Give the functions return type.
 foreign import ccall unsafe "LLVMGetFunctionReturnType" getFunctionReturnType
+        :: ValueRef -> IO TypeRef
+
+-- | Give the functions type.
+foreign import ccall unsafe "LLVMGetFunctionType" getFunctionType
         :: ValueRef -> IO TypeRef
 
 -- | Give the number of fixed parameters that a function takes.

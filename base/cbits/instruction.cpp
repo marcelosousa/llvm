@@ -54,6 +54,10 @@ LLVMTypeRef LLVMGetFunctionReturnType(LLVMValueRef Fn){
   return wrap(unwrap<Function>(Fn)->getReturnType());
 }
 
+LLVMTypeRef LLVMGetFunctionType(LLVMValueRef Fn){
+  return wrap(unwrap<Function>(Fn)->getFunctionType());
+}
+
 LLVMBool LLVMHasUnnamedAddr(LLVMValueRef Global){
    return unwrap<GlobalValue>(Global)->hasUnnamedAddr();
 }

@@ -21,6 +21,8 @@ unsigned LLVMLoadGetAlignment(LLVMValueRef Load);
 
 LLVMBool LLVMReturnInstHasReturnValue(LLVMValueRef Return);
 
+LLVMTypeRef LLVMGetFunctionType(LLVMValueRef Fn);
+
 LLVMTypeRef LLVMGetFunctionReturnType(LLVMValueRef Fn);
 
 LLVMBool LLVMHasUnnamedAddr(LLVMValueRef Global);
