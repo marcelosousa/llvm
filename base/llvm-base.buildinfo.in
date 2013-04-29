@@ -5,3 +5,4 @@ extra-lib-dirs: @llvm_extra_libdirs@
 x-extra-ghci-libraries: @llvm_extra_ghci_libs@
 ld-options: @llvm_ldoptions@
 include-dirs: @llvm_includedir@
+cc-options: @llvm_cppflags@

@@ -34,7 +34,7 @@ typedef enum {
 
 typedef enum {
   LLVMFloatValue,
-  LLVMDoubleValue,
+  LLVMDoubleValue
 } LLVMConstantFPClass;
 
 LLVMConstantClass LLVMGetConstantClass(LLVMValueRef Val);
