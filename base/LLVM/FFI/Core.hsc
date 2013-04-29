@@ -600,7 +600,7 @@ module LLVM.FFI.Core
 import Data.Typeable(Typeable)
 import Foreign.C.String (CString)
 #if __GLASGOW_HASKELL__ >= 704
-import Foreign.C.Types (CDouble(..), CFloat, CInt(..), CUInt(..), CLLong(..), CULLong(..))
+import Foreign.C.Types (CDouble(..), CFloat(..), CInt(..), CUInt(..), CLLong(..), CULLong(..))
 #else
 import Foreign.C.Types (CDouble, CFloat, CInt, CUInt, CLLong, CULLong)
 #endif
