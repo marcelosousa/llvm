@@ -5,3 +5,4 @@ extra-lib-dirs:  /usr/local/lib
 x-extra-ghci-libraries: 
 ld-options: 
 include-dirs: /usr/local/include
+cc-options: -I/usr/local/include    -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS
