@@ -41,7 +41,7 @@
 #define HAVE_UNISTD_H 1
 
 /* Define to the version of LLVM, e.g. 209 for 2.9. */
-#define HS_LLVM_VERSION 302
+#define HS_LLVM_VERSION 303
 
 /* Define to the address where bug reports for this package should be sent. */
 #define PACKAGE_BUGREPORT "bos@serpentine.com"

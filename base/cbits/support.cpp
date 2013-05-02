@@ -14,6 +14,7 @@
 #endif
 
 #include "support.h"
+#include "llvm/IR/Module.h"
 
 using namespace llvm;
 

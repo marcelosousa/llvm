@@ -6,6 +6,12 @@
 #include "llvm-c/Core.h"
 
 #include "ConstantsContext.h"
+#include "llvm/IR/Constant.h"
+#include "llvm/IR/Constants.h"
+#include "llvm/IR/Value.h"
+#include "llvm/IR/GlobalValue.h"
+#include "llvm/IR/GlobalAlias.h"
+#include "llvm/IR/Function.h"
 #include "constant.h"
 
 using namespace llvm;

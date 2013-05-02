@@ -4,6 +4,10 @@
 #include "hs_llvm_config.h"
 
 #include "llvm-c/Core.h"
+#include "llvm/IR/Module.h"
+#include "llvm/IR/Value.h"
+#include "llvm/IR/Instruction.h"
+#include "llvm/IR/Instructions.h"
 
 #include "instruction.h"
 

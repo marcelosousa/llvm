@@ -46,19 +46,19 @@
 #define __STDC_CONSTANT_MACROS
 
 // LLVM includes
-#include "llvm/LLVMContext.h"
+#include "llvm/IR/LLVMContext.h"
 #include "llvm/Bitcode/ReaderWriter.h"
 #include "llvm/Support/MemoryBuffer.h"
 #include "llvm/Support/Casting.h"
-#include "llvm/Constants.h"
-#include "llvm/DerivedTypes.h"
-#include "llvm/GlobalVariable.h"
+#include "llvm/IR/Constants.h"
+#include "llvm/IR/DerivedTypes.h"
+#include "llvm/IR/GlobalVariable.h"
 #if HS_LLVM_VERSION < 300
 #include "llvm/TypeSymbolTable.h"
 #endif
 #include "llvm/Support/MemoryBuffer.h"
 #include "llvm/Support/CallSite.h"
-#include "llvm/IntrinsicInst.h"
+#include "llvm/IR/IntrinsicInst.h"
 #include "llvm/Analysis/Verifier.h"
 #include "llvm/Assembly/Parser.h"
 #ifdef HAVE_LLVM_SUPPORT_DYNAMICLIBRARY_H
@@ -78,6 +78,8 @@
 #include "llvm/Transforms/Utils/Cloning.h"
 #include "llvm/Linker.h"
 #include "llvm/Support/SourceMgr.h"
+#include "llvm/IR/Module.h"
+#include "llvm/IR/IRBuilder.h"
 
 // LLVM-C includes
 #include "llvm-c/Core.h"
@@ -533,7 +535,7 @@ define_pass( AlwaysInliner )
 define_pass( BlockPlacement )
 define_pass( BreakCriticalEdges )
 define_pass( CodeGenPrepare )
-define_pass( DbgInfoPrinter )
+//define_pass( DbgInfoPrinter )
 define_pass( DeadCodeElimination )
 define_pass( DeadInstElimination )
 define_pass( DemoteRegisterToMemory )
