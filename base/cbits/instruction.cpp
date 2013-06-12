@@ -30,6 +30,14 @@ LLVMValueRef LLVMReturnInstGetReturnValue(LLVMValueRef Return){
   return wrap(unwrap<ReturnInst>(Return)->getReturnValue());
 }
 
+/*--.. Operations on call instruction ..................................--*/
+LLVMBool LLVMCallInstIsInlineAsm(LLVMValueRef Call){
+  return unwrap<CallInst>(Call)->isInlineAsm();
+}
+
+LLVMValueRef LLVMCallGetCalledValue(LLVMValueRef Call){
+  return wrap(unwrap<CallInst>(Call)->getCalledValue());
+}
 
 /*--.. Operations on branch instruction ....................................--*/
 LLVMBool LLVMBrInstIsConditional(LLVMValueRef Br){

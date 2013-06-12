@@ -9,6 +9,10 @@ unsigned LLVMReturnInstGetNumSuccessors(LLVMValueRef ReturnInstr);
 
 LLVMValueRef LLVMReturnInstGetReturnValue(LLVMValueRef ReturnInstr);
 
+LLVMBool LLVMCallInstIsInlineAsm(LLVMValueRef Call);
+
+LLVMValueRef LLVMCallGetCalledValue(LLVMValueRef Call);
+
 LLVMBool LLVMBrInstIsConditional(LLVMValueRef Br);
 
 unsigned LLVMAllocaGetAlignment(LLVMValueRef Alloca);

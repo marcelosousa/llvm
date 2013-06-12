@@ -115,6 +115,12 @@ module LLVM.FFI.Core
     , setValueName
     , dumpValue
 
+    , inlineAsmString
+    , inlineAsmConstrString
+    , inlineAsmHasSideEffects
+    , inlineAsmIsAlignStack
+    , inlineAsmGetDialect
+
     -- ** Constants
     , constNull
     , constAllOnes
@@ -307,6 +313,8 @@ module LLVM.FFI.Core
     , instGetOpcode, cmpInstGetPredicate
     , instGetOpcodeName
     , constGetOpcode
+    , isCallInlineAsm             -- added
+    , getCalledValue              -- added
     , returnInstGetReturnValue    -- added
     , returnInstGetNumSuccessors  -- added
     , returnInstHasReturnValue    -- added
@@ -838,6 +846,21 @@ foreign import ccall unsafe "LLVMConstantValueGetNumElem" constantValueGetNumEle
 foreign import ccall unsafe "LLVMConstantValueGetElemByteSize" constantValueGetElemByteSize
     :: ValueRef -> IO CUInt
 
+foreign import ccall unsafe "LLVMInlineAsmString" inlineAsmString
+    :: ValueRef -> IO CString
+
+foreign import ccall unsafe "LLVMInlineAsmConstrString" inlineAsmConstrString
+    :: ValueRef -> IO CString
+
+foreign import ccall unsafe "LLVMInlineAsmHasSideEffects" inlineAsmHasSideEffects
+    :: ValueRef -> IO CInt
+
+foreign import ccall unsafe "LLVMInlineAsmIsAlignStack" inlineAsmIsAlignStack
+    :: ValueRef -> IO CInt
+
+foreign import ccall unsafe "LLVMInlineAsmGetDialect" inlineAsmGetDialect
+    :: ValueRef -> IO CUInt
+
 foreign import ccall unsafe "LLVMConstantValueGetAsString" constantValueGetAsString
     :: ValueRef -> IO CString
 
@@ -1245,6 +1268,12 @@ foreign import ccall unsafe "LLVMReturnInstGetReturnValue" returnInstGetReturnVa
 
 foreign import ccall unsafe "LLVMReturnInstHasReturnValue" returnInstHasReturnValue
     :: ValueRef -> IO CInt
+
+foreign import ccall unsafe "LLVMCallInstIsInlineAsm" isCallInlineAsm
+    :: ValueRef ->  IO CInt
+
+foreign import ccall unsafe "LLVMCallGetCalledValue" getCalledValue 
+    :: ValueRef -> IO ValueRef
 
 foreign import ccall unsafe "LLVMBrInstIsConditional" brInstIsConditional
     :: ValueRef ->  IO CInt

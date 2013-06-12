@@ -37,6 +37,16 @@ typedef enum {
   LLVMDoubleValue
 } LLVMConstantFPClass;
 
+const char *LLVMInlineAsmString(LLVMValueRef Val);
+
+const char *LLVMInlineAsmConstrString(LLVMValueRef Val);
+
+LLVMBool LLVMInlineAsmHasSideEffects(LLVMValueRef Val);
+
+LLVMBool LLVMInlineAsmIsAlignStack(LLVMValueRef Val);
+
+unsigned LLVMInlineAsmGetDialect(LLVMValueRef Val);
+
 LLVMConstantClass LLVMGetConstantClass(LLVMValueRef Val);
 
 LLVMGlobalValueClass LLVMGetGlobalValueClass(LLVMValueRef GlobalVal);

@@ -210,3 +210,25 @@ unsigned LLVMConstCompareGetPredicate(LLVMValueRef Val){
   ConstantExpr *CE = dyn_cast<ConstantExpr>(unwrap(Val));
   return ((const CompareConstantExpr*)CE)->predicate;
 }
+
+const char *LLVMInlineAsmString(LLVMValueRef Val){
+  InlineAsm *IA = dyn_cast<InlineAsm>(unwrap(Val));
+  return IA->getAsmString().c_str();
+}
+
+const char *LLVMInlineAsmConstrString(LLVMValueRef Val){
+  InlineAsm *IA = dyn_cast<InlineAsm>(unwrap(Val));
+  return IA->getConstraintString().c_str();
+}
+
+LLVMBool LLVMInlineAsmHasSideEffects(LLVMValueRef Val) {
+  return unwrap<InlineAsm>(Val)->hasSideEffects();
+}
+
+LLVMBool LLVMInlineAsmIsAlignStack(LLVMValueRef Val) {
+  return unwrap<InlineAsm>(Val)->isAlignStack();
+}
+
+unsigned LLVMInlineAsmGetDialect(LLVMValueRef Val) {
+  return unwrap<InlineAsm>(Val)->getDialect();
+}
