@@ -144,6 +144,7 @@ module LLVM.FFI.Core
     , constantValueGetNumElem
     , constantValueIsString
     , constantValueGetAsString
+    , constantValueGetRawDataValues
     , constantValueGetElemByteSize
 
     -- ** Global variables, functions, and aliases (globals)
@@ -862,6 +863,9 @@ foreign import ccall unsafe "LLVMInlineAsmGetDialect" inlineAsmGetDialect
     :: ValueRef -> IO CUInt
 
 foreign import ccall unsafe "LLVMConstantValueGetAsString" constantValueGetAsString
+    :: ValueRef -> IO CString
+
+foreign import ccall unsafe "LLVMConstantValueGetRawDataValues" constantValueGetRawDataValues
     :: ValueRef -> IO CString
 
 foreign import ccall unsafe "LLVMConstantValueIsString" constantValueIsString

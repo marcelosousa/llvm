@@ -65,6 +65,8 @@ unsigned LLVMConstantValueGetNumElem(LLVMValueRef Val);
 
 const char *LLVMConstantValueGetAsString(LLVMValueRef Val);
 
+const char *LLVMConstantValueGetRawDataValues(LLVMValueRef Val);
+
 unsigned LLVMConstantValueGetElemByteSize(LLVMValueRef Val);
 
 LLVMTypeRef LLVMConstantArrayGetType(LLVMValueRef Val);

@@ -130,6 +130,15 @@ const char *LLVMConstantValueGetAsString(LLVMValueRef Val){
   }
 }
 
+const char *LLVMConstantValueGetRawDataValues(LLVMValueRef Val){
+  if (Constant *C = dyn_cast<Constant>(unwrap(Val))){
+   if(isa<ConstantDataSequential>(C)){
+    ConstantDataSequential *CD = dyn_cast<ConstantDataSequential>(C);
+    return CD->getRawDataValues().data();
+   }
+  }
+}
+
 unsigned LLVMConstantValueGetElemByteSize(LLVMValueRef Val){
   if (Constant *C = dyn_cast<Constant>(unwrap(Val))){
    if(isa<ConstantDataSequential>(C)){
